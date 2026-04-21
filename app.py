@@ -1,56 +1,63 @@
 import streamlit as st
 from PIL import Image
-import base64
 
 # Page config
 st.set_page_config(page_title="Plant Disease Detector", page_icon="🌿", layout="centered")
 
-# Function to set background image
-def set_bg():
-    bg_url = "https://images.unsplash.com/photo-1501004318641-b39e6451bec6"
-    st.markdown(
-        f"""
-        <style>
-        .stApp {{
-            background-image: url("{bg_url}");
-            background-size: cover;
-            background-attachment: fixed;
-        }}
+# Custom CSS (clean green theme)
+st.markdown("""
+<style>
+.stApp {
+    background: linear-gradient(to right, #d4fc79, #96e6a1);
+}
 
-        .glass {{
-            background: rgba(255, 255, 255, 0.85);
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0px 4px 20px rgba(0,0,0,0.2);
-        }}
+/* Title */
+.title {
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    color: #1b4332;
+}
 
-        .title {{
-            font-size: 38px;
-            font-weight: bold;
-            color: #2f855a;
-            text-align: center;
-        }}
+/* Subtitle */
+.subtitle {
+    font-size: 18px;
+    text-align: center;
+    color: #2d6a4f;
+    margin-bottom: 20px;
+}
 
-        .subtitle {{
-            font-size: 18px;
-            text-align: center;
-            color: #333;
-        }}
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
+/* Buttons */
+.stButton>button {
+    background-color: #2d6a4f;
+    color: white;
+    border-radius: 10px;
+    height: 3em;
+    width: 100%;
+    font-size: 16px;
+}
 
-set_bg()
+/* Upload box */
+.stFileUploader {
+    border: 2px dashed #2d6a4f;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #f0fff4;
+}
 
-# Glass container
-st.markdown('<div class="glass">', unsafe_allow_html=True)
+/* Result box */
+.result {
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #e9f5ec;
+    margin-top: 20px;
+}
+</style>
+""", unsafe_allow_html=True)
 
 # Title
 st.markdown('<p class="title">🌿 AI Plant Disease Detection</p>', unsafe_allow_html=True)
-st.markdown('<p class="subtitle">Upload a leaf image and detect plant diseases instantly</p>', unsafe_allow_html=True)
-
-st.write("")
+st.markdown('<p class="subtitle">Upload a leaf image to detect disease and get treatment instantly</p>', unsafe_allow_html=True)
 
 # Upload
 uploaded_file = st.file_uploader("📤 Upload Leaf Image", type=["jpg", "png", "jpeg"])
@@ -61,6 +68,8 @@ if uploaded_file is not None:
 
     if st.button("🔍 Analyze"):
         with st.spinner("Analyzing image..."):
+            st.markdown('<div class="result">', unsafe_allow_html=True)
+
             st.success("🌱 Disease Detected: Leaf Spot")
 
             st.markdown("### 💊 Suggested Treatment")
@@ -71,4 +80,4 @@ if uploaded_file is not None:
             - Ensure proper sunlight  
             """)
 
-st.markdown('</div>', unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
